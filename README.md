@@ -43,7 +43,7 @@ The application allows you to load, explore, and analyze data about games from t
 
 ## Author
 
-Project for course credit – 2025
+Krzysztof Cieślik
 
 ---
 
@@ -92,4 +92,4 @@ Aplikacja umożliwia wczytywanie, eksplorację i analizę danych o grach ze skle
 
 ## Autor
 
-Projekt na potrzeby zaliczenia przedmiotu – 2025
+Krzysztof Cieślik
