@@ -1,57 +1,4 @@
-<<<<<<< HEAD
-# steam_data_set_analyze
-steam_data_set_analyze in python
-=======
 # Steam Game Analysis
-
-## Opis projektu
-
-Aplikacja umożliwia wczytywanie, eksplorację i analizę danych o grach ze sklepu Steam. Użytkownik może filtrować dane, wybierać zakresy dat, platformy, ceny oraz generować różne analizy i wizualizacje. Wyniki prezentowane są w formie wykresów oraz tekstowych wniosków.
-
-## Uzasadnienie zastosowanych metod
-
-- **Analizy i wizualizacje** zostały dobrane do charakteru danych (np. rozkład ocen, liczba recenzji, ceny, popularność tagów), co pozwala na szybkie wychwycenie trendów i zależności.
-- **Filtrowanie i konwersje typów** (np. daty, liczby, kategorie) umożliwiają elastyczną eksplorację zbioru danych.
-- **Wizualizacje** (wykresy słupkowe, liniowe, pudełkowe, 3D) są czytelne i dostosowane do analizowanych cech.
-
-## Rozwiązania programistyczne
-
-- **Programowanie obiektowe**: Kluczowe elementy (strategie analizy, GUI, kontroler) są zaimplementowane jako klasy.
-- **Wzorzec projektowy Strategia**: Umożliwia łatwe dodawanie nowych typów analiz bez modyfikacji kodu głównego programu.
-- **Testy jednostkowe**: Plik `test_analysis_app.py` sprawdza poprawność działania funkcji analitycznych i kontrolera.
-- **Obsługa wyjątków**: Program obsługuje błędy użytkownika i błędy podczas ładowania danych, zapewniając nieprzerwaną egzekucję.
-
-## Struktura projektu
-
-- `main.py` – uruchomienie aplikacji
-- `gui.py` – interfejs graficzny
-- `controller.py` – logika sterująca, walidacja, wybór strategii
-- `analyze.py` – strategie analizy danych (wzorzec Strategia)
-- `read_data.py` – ładowanie i wstępne przetwarzanie danych
-- `config.py` – stałe i ustawienia
-- `test_analysis_app.py` – testy jednostkowe
-- `archive/games.csv`, `archive/games_metadata.json` – dane
-- `requirements.txt` – wymagane biblioteki
-
-## Wymagania
-
-- Python 3.10+
-- Wszystkie wymagane biblioteki znajdują się w `requirements.txt`
-
-## Uruchomienie
-
-1. Zainstaluj wymagane biblioteki:  
-   `pip install -r requirements.txt`
-2. Uruchom aplikację:  
-   `python main.py`
-
-## Autor
-
-Projekt na potrzeby zaliczenia przedmiotu – 2025
-
----
-
-# Steam Game Analysis (English Version)
 
 ## Project Description
 
@@ -97,4 +44,52 @@ The application allows you to load, explore, and analyze data about games from t
 ## Author
 
 Project for course credit – 2025
->>>>>>> b382bfb (Initial commit - upload all project files)
+
+---
+
+# Opis projektu (Polska wersja)
+
+## Opis projektu
+
+Aplikacja umożliwia wczytywanie, eksplorację i analizę danych o grach ze sklepu Steam. Użytkownik może filtrować dane, wybierać zakresy dat, platformy, ceny oraz generować różne analizy i wizualizacje. Wyniki prezentowane są w formie wykresów oraz tekstowych wniosków.
+
+## Uzasadnienie zastosowanych metod
+
+- **Analizy i wizualizacje** zostały dobrane do charakteru danych (np. rozkład ocen, liczba recenzji, ceny, popularność tagów), co pozwala na szybkie wychwycenie trendów i zależności.
+- **Filtrowanie i konwersje typów** (np. daty, liczby, kategorie) umożliwiają elastyczną eksplorację zbioru danych.
+- **Wizualizacje** (wykresy słupkowe, liniowe, pudełkowe, 3D) są czytelne i dostosowane do analizowanych cech.
+
+## Rozwiązania programistyczne
+
+- **Programowanie obiektowe**: Kluczowe elementy (strategie analizy, GUI, kontroler) są zaimplementowane jako klasy.
+- **Wzorzec projektowy Strategia**: Umożliwia łatwe dodawanie nowych typów analiz bez modyfikacji kodu głównego programu.
+- **Testy jednostkowe**: Plik `test_analysis_app.py` sprawdza poprawność działania funkcji analitycznych i kontrolera.
+- **Obsługa wyjątków**: Program obsługuje błędy użytkownika i błędy podczas ładowania danych, zapewniając nieprzerwaną egzekucję.
+
+## Struktura projektu
+
+- `main.py` – uruchomienie aplikacji
+- `gui.py` – interfejs graficzny
+- `controller.py` – logika sterująca, walidacja, wybór strategii
+- `analyze.py` – strategie analizy danych (wzorzec Strategia)
+- `read_data.py` – ładowanie i wstępne przetwarzanie danych
+- `config.py` – stałe i ustawienia
+- `test_analysis_app.py` – testy jednostkowe
+- `archive/games.csv`, `archive/games_metadata.json` – dane
+- `requirements.txt` – wymagane biblioteki
+
+## Wymagania
+
+- Python 3.10+
+- Wszystkie wymagane biblioteki znajdują się w `requirements.txt`
+
+## Uruchomienie
+
+1. Zainstaluj wymagane biblioteki:  
+   `pip install -r requirements.txt`
+2. Uruchom aplikację:  
+   `python main.py`
+
+## Autor
+
+Projekt na potrzeby zaliczenia przedmiotu – 2025
