@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib.figure import Figure
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+from mpl_toolkits.mplot3d import Axes3D 
 from scipy.stats import pearsonr
 
 import config
@@ -212,7 +212,7 @@ class PlatformRatingsStrategy(AnalysisStrategy):
 Współczynnik korelacji Pearsona
 Współczynnik korelacji liniowej Pearsona – współczynnik określający poziom zależności liniowej między zmiennymi losowymi. Został opracowany przez Karla Pearsona. 
 Współczynnik korelacji liniowej można traktować jako znormalizowaną kowariancję. 
-Korelacja przyjmuje zawsze wartości w zakresie [−1, 1], co pozwala uniezależnić analizę od dziedziny badanych zmiennych. 
+Korelacja przyjmuje zawsze wartości w zakresie [-1, 1], co pozwala uniezależnić analizę od dziedziny badanych zmiennych. 
 Korelacje można interpretować jako silne, słabe, ujemne[1][2]. Interpretacja taka jest jednak arbitralna i nie możemy jej traktować zbyt ściśle.
 """
 
