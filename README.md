@@ -97,3 +97,8 @@ Krzysztof Cieślik
 ## Zrzut ekranu aplikacji
 
 ![Zrzut ekranu aplikacji](image.webp)
+
+## Wzorce projektowe
+
+- Wzorzec Strategia: [refactoring.guru/pl/design-patterns/strategy](https://refactoring.guru/pl/design-patterns/strategy)
+- Plik `config.py` pełni rolę singletona – w Pythonie każdy import tego modułu zwraca tę samą instancję, więc wszystkie ustawienia i stałe są współdzielone globalnie w aplikacji.
