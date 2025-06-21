@@ -20,13 +20,13 @@ from read_data import load_game_metadata  # new metadata loader
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Ładowanie metadanych przy imporcie
+# Ładowanie metadanych przy imporcie – wczytuje metadane do DataFrame indeksowanego po app_id
 # ---------------------------------------------------------------------------
 _meta_df: DataFrame = load_game_metadata()  # indeksowane po app_id
 logger.info("Załadowano metadane dla %d app_ids", len(_meta_df))
 
 # ---------------------------------------------------------------------------
-# Pomocnicze funkcje konwersji
+# Pomocnicze funkcje konwersji – zamiana tekstu na datę lub liczbę, walidacja wartości
 # ---------------------------------------------------------------------------
 
 def _coerce_date(s: str | None) -> Optional[pd.Timestamp]:
@@ -52,7 +52,7 @@ def _coerce_price(v) -> Optional[float]:
         raise ValueError("Cena musi być nieujemną liczbą.")
 
 # ---------------------------------------------------------------------------
-# Walidacja dat i cen
+# Walidacja dat i cen – sprawdzanie poprawności zakresów podanych przez użytkownika
 # ---------------------------------------------------------------------------
 
 def validate_dates(df: DataFrame, start: str | None, end: str | None) -> Optional[str]:
@@ -85,7 +85,7 @@ def _validate_prices(pmin_raw, pmax_raw) -> tuple[Optional[float], Optional[floa
     return pmin, pmax
 
 # ---------------------------------------------------------------------------
-# Wybór i uruchamianie strategii analizy
+# Wybór i uruchamianie strategii analizy – dynamiczne tworzenie i uruchamianie klasy analitycznej
 # ---------------------------------------------------------------------------
 
 def run_analysis(
@@ -101,11 +101,14 @@ def run_analysis(
     """
     Waliduje dane wejściowe, tworzy strategię analizy, uruchamia ją i zwraca (figury, wnioski).
     """
+    # Walidacja cen
     pmin, pmax = _validate_prices(price_min, price_max)
+    # Pobranie klasy strategii na podstawie klucza
     class_name = config.ANALYSIS_MAP.get(analysis_key)
     if not class_name:
         raise ValueError(f"Brak strategii dla analizy: {analysis_key}")
     Strategy = getattr(importlib.import_module("analyze"), class_name)
+    # Utworzenie instancji strategii z przekazanymi parametrami
     strat = Strategy(
         platforms=platforms,
         start_date=start,
@@ -114,11 +117,12 @@ def run_analysis(
         price_max=pmax,
         **extra,
     )
+    # Uruchomienie analizy i pobranie wyników
     figs = strat.execute(strat.preprocess(df))
     return figs, strat.get_insights()
 
 # ---------------------------------------------------------------------------
-# Pomocnicze funkcje wyszukiwania i łączenia metadanych
+# Pomocnicze funkcje wyszukiwania i łączenia metadanych – pobieranie i łączenie danych o grach
 # ---------------------------------------------------------------------------
 
 def _merge_meta(record: Dict) -> Dict:

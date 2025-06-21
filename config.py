@@ -1,5 +1,5 @@
 """
-Moduł konfiguracyjny – stałe i ustawienia dla aplikacji analizy gier Steam.
+Moduł konfiguracyjny - stałe i ustawienia dla aplikacji analizy gier Steam.
 
 Zawiera ścieżki do plików, nazwy kolumn, mapowanie analiz oraz teksty interfejsu.
 """
@@ -56,7 +56,7 @@ ANALYSIS_MAP = {
 ABOUT_TEXT        = "Steam Game Analysis App\nCreated for data exploration and visualization."
 GET_BY_ID_LABEL   = "Get game by ID"
 GET_BY_ROW_LABEL  = "Get row number"
-GET_BY_ID_TITLE   = "Game Info – ID {id}"
-GET_BY_ROW_TITLE  = "Game Info – Row {row}"
-INVALID_INPUT_MSG = "Input must be a number."
+GET_BY_ID_TITLE   = "Game Info - ID {id}"
+GET_BY_ROW_TITLE  = "Game Info - Row {row}"
+INVALID_INPUT_MSG = "Input must be a positive number."
 NOT_FOUND_MSG     = "No matching entry found."

@@ -28,13 +28,13 @@ import config
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Paths
+# Paths – ścieżki do plików z danymi i metadanymi
 # ---------------------------------------------------------------------------
 DATA_PATH: Path = config.DATA_PATH  # games.csv (already defined in config)
 META_PATH: Path = config.BASE_DIR / "archive" / "games_metadata.json"  # JSON‑Lines
 
 # ---------------------------------------------------------------------------
-# Main CSV loader
+# Main CSV loader – wczytywanie i wstępne przetwarzanie głównego pliku z danymi
 # ---------------------------------------------------------------------------
 
 def load_data_game() -> pd.DataFrame:
@@ -53,10 +53,10 @@ def load_data_game() -> pd.DataFrame:
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Data file not found: {DATA_PATH}")
 
-    # Load as strings first; we'll coerce below.
+    # Wczytaj dane jako teksty (będzie konwersja poniżej)
     df = pd.read_csv(DATA_PATH, dtype=str, on_bad_lines="skip")
 
-    # Numeric columns
+    # Konwersja kolumn numerycznych do float/int (błędne wartości -> NaN)
     numeric_cols: List[str] = [
         "app_id",
         "positive_ratio",
@@ -69,7 +69,7 @@ def load_data_game() -> pd.DataFrame:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # Release date – keep only YYYY‑MM‑DD (drop hour part present in some rows)
+    # Konwersja daty wydania do formatu datetime (tylko rok-miesiąc-dzień)
     if config.DATE_COL in df.columns:
         df[config.DATE_COL] = (
             df[config.DATE_COL]
@@ -78,19 +78,19 @@ def load_data_game() -> pd.DataFrame:
             .pipe(pd.to_datetime, errors="coerce")
         )
 
-    # Platform flags to bool
+    # Flagi platform (np. Windows, Mac, Linux) na bool
     for col in config.PLATFORM_COLS:
         if col in df.columns:
             df[col] = df[col].astype(str).str.lower().isin(["true", "1"]).fillna(False)
 
-    # Derived column: title length
+    # Dodatkowa kolumna: długość tytułu gry
     if config.TITLE_COL in df.columns:
         df[config.TITLE_LEN_COL] = df[config.TITLE_COL].astype(str).str.len()
 
     return df
 
 # ---------------------------------------------------------------------------
-# Metadata loader (JSON‑Lines)
+# Metadata loader (JSON‑Lines) – wczytywanie opisów i tagów gier z pliku JSON
 # ---------------------------------------------------------------------------
 
 def load_game_metadata() -> pd.DataFrame:
@@ -106,10 +106,12 @@ def load_game_metadata() -> pd.DataFrame:
     """
     if not META_PATH.exists():
         logger.warning("Metadata file not found: %s", META_PATH)
+        # Zwraca pusty DataFrame z odpowiednimi kolumnami, jeśli plik nie istnieje
         empty = pd.DataFrame(columns=["description", "tags"])
         return empty.set_index(pd.Index([], name="app_id"))
 
     records = []
+    # Wczytuje plik JSON‑Lines linia po linii
     with META_PATH.open("r", encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
@@ -127,31 +129,36 @@ def load_game_metadata() -> pd.DataFrame:
 
     df_meta = pd.DataFrame.from_records(records)
 
-    # Normalise missing values
+    # Uzupełnia brakujące opisy pustym stringiem
     df_meta["description"] = df_meta["description"].fillna("")
+    # Uzupełnia brakujące tagi pustą listą
     df_meta["tags"] = df_meta["tags"].apply(lambda x: x if isinstance(x, list) else [])
 
-    # Ensure correct dtypes & index
+    # Upewnia się, że app_id jest liczbą całkowitą i ustawia jako indeks
     df_meta["app_id"] = pd.to_numeric(df_meta["app_id"], errors="coerce").astype("Int64")
     df_meta = df_meta.dropna(subset=["app_id"]).set_index("app_id")
 
     return df_meta
 
 # ---------------------------------------------------------------------------
-# Convenience combined loader (optional)
+# Convenience combined loader (optional) – łączy dane główne z metadanymi
 # ---------------------------------------------------------------------------
 
 def load_games_with_metadata() -> pd.DataFrame:
     """Return the main games DataFrame **joined** with metadata by `app_id`."""
+    # Wczytuje główny zbiór danych
     games = load_data_game()
+    # Wczytuje metadane
     meta = load_game_metadata()
+    # Jeśli nie ma metadanych, zwraca tylko główne dane
     if meta.empty:
         return games
+    # Łączy dane główne z metadanymi po app_id (lewy join)
     return games.merge(meta, left_on="app_id", right_index=True, how="left")
 
 
 if __name__ == "__main__":
-    # Quick smoke‑test
+    # Szybki test ładowania danych
     gdf = load_data_game()
     mdf = load_game_metadata()
     print("Loaded", len(gdf), "games; metadata for", len(mdf), "ids")
