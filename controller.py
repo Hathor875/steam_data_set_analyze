@@ -107,6 +107,7 @@ def run_analysis(
     class_name = config.ANALYSIS_MAP.get(analysis_key)
     if not class_name:
         raise ValueError(f"Brak strategii dla analizy: {analysis_key}")
+    # Wyciąga tylko jedną klasę z modułu analyze
     Strategy = getattr(importlib.import_module("analyze"), class_name)
     # Utworzenie instancji strategii z przekazanymi parametrami
     strat = Strategy(

@@ -93,3 +93,7 @@ Aplikacja umożliwia wczytywanie, eksplorację i analizę danych o grach ze skle
 ## Autor
 
 Krzysztof Cieślik
+
+## Zrzut ekranu aplikacji
+
+![Zrzut ekranu aplikacji](image.webp)
